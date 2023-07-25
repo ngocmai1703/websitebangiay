@@ -1,0 +1,75 @@
+﻿@using SellFootWear.Models;
+@using PagedList.Mvc;
+@model PagedList.IPagedList<SellFootWear.Models.Customer>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div style="margin-left:20px">
+    <h3>Quản lí khách hàng </h3>
+</div>
+<hr />
+<a class="btn btn-success" href="@Url.Action( "Create" )" style="margin-left: 20px; margin-bottom: 10px;">
+    <i class="fas fa-pencil-alt">
+    </i>
+    Thêm mới
+</a>
+<section class="content">
+
+    <!-- Default box -->
+    <div class="card card-solid">
+        <div class="card-body pb-0">
+            <div class="row">
+                @foreach (var item in Model)
+                {
+                    <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
+                        <div class="card bg-light d-flex flex-fill">
+                            <div class="card-header text-muted border-bottom-0">
+                                Khách hàng
+                            </div>
+                            <div class="card-body pt-0">
+                                <div class="row">
+                                    <div class="col-7">
+                                        <h2 class="lead"><b>@item.CustomName</b></h2>
+                                        <p class="text-muted text-sm"><b>Email: </b> @item.Email </p>
+                                        <ul class="ml-4 mb-0 fa-ul text-muted">
+                                            <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span> Địa chỉ: @item.Address</li>
+                                            <li class="small" style=" margin-top: 12px;"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> SĐT #: @item.PhoneNumber</li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-5 text-center">
+                                        <img src="~/Content/dist/img/user-customer.jpg" alt="user-avatar" class="img-circle img-fluid">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <div class="text-right">
+                                    <a class="btn btn-primary btn-sm" href=" @Url.Action("Details", new { id = item.CustomID })">
+                                        <i class="fas fa-eye">
+                                        </i>
+                                        View
+                                    </a>
+
+                                    <a class="btn btn-info btn-sm" href="@Url.Action("Edit", new { id = item.CustomID })">
+                                        <i class="fas fa-pencil-alt">
+                                        </i>
+                                        Edit
+                                    </a>
+
+                                    <a class="btn btn-danger btn-sm"
+                                       onclick="if (confirm('Bạn có chắc muốn xóa không!') == true) { location.href = '@Url.Action("Delete", new { id = item.CustomID })' }">
+                                        <i class="fas fa-trash">
+                                        </i>
+                                        Delete
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+<div style="text-align: center; margin-bottom: -15px; margin-top: -20px; ">@Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }))</div>

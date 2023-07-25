@@ -1,0 +1,123 @@
+@model SellFootWear.Models.Product
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+<!-- Main content -->
+<section class="content">
+
+    <!-- Default box -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Projects Detail</h3>
+
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-12 col-md-12 col-lg-8 order-2 order-md-1">
+                    <div class="row">
+                        <div class="col-12 col-sm-4">
+
+                            <div class="info-box-content">
+                                <img src="~/Content/img/product/@Model.image" style="width: 250px" alt="Snow" id="myImg">
+                            </div>
+
+                        </div>
+                        <div class="col-12 col-sm-4">
+
+                            <div class="info-box-content">
+                                <img src="~/Content/img/product/@Model.image2" style="width: 250px" alt="Snow" id="myImg">
+                            </div>
+
+                        </div>
+                        <div class="col-12 col-sm-4">
+
+                            <div class="info-box-content">
+                                <div class="hover14 column">
+                                    <img src="~/Content/img/product/@Model.image3" style="width: 250px" alt="Snow" id="myImg">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-12 col-lg-4 order-1 order-md-2">
+                    <h4 style=" margin-top:15px; font-weight: bold">@Model.NameProduct</h4>
+                    <p style="margin-top:15px">Giá: @string.Format("{0:#,##0,0}", Model.price) VNĐ</p>
+                    <p>Thương hiệu: @Html.DisplayFor(model => model.Brand.brand1)</p>
+                    <p>Loại:  @Html.DisplayFor(model => model.Type.TypeName)</p>
+                    <p>Ngày cập nhật: @Html.DisplayFor(model => model.UpdateDay)</p>
+
+                </div>
+            </div>
+            <h3 class="text-primary" style="font-size:1.3rem; margin-top: 25px"><i class="fas fa-paint-brush"></i> Mô tả ngắn:</h3>
+            <p class="text-muted">
+                <dd>
+                    @Html.Raw(@Model.describeshort)
+                   
+                </dd>
+            </p>
+            <br>
+            <h3 class="text-primary" style="font-size:1.3rem"><i class="fas fa-paint-brush"></i> Mô tả dài:</h3>
+            <p class="text-muted">
+                <dd>
+                    @Html.Raw(@Model.describe)
+                  
+                </dd>
+            </p>
+            <p>
+                <a class="btn btn-warning" href="@Url.Action( "Edit", new { id = Model.pID })">
+                    <i class="fas fa-pencil-alt">
+                    </i>
+                    Edit
+                </a> |
+ 
+                <a class="btn btn-secondary" href="@Url.Action( "Index")">
+                    Back to list
+                </a>
+            </p>
+        </div>
+        <!-- /.card-body -->
+        
+    </div>
+    <!-- /.card -->
+
+</section>
+<style>
+    #myImg {
+      border-radius: 5px;
+      cursor: pointer;
+      transition-duration: 0.3s;
+    }
+
+    #myImg:hover {
+      transform: scale(1.1);
+      opacity: 0.7;
+    }
+
+    /* The Modal (background) */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        padding-top: 100px; /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+    }
+
+</style>

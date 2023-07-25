@@ -1,0 +1,193 @@
+@model IEnumerable<SellFootWear.Models.Cart>
+@{
+    ViewBag.Title = "CartIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Start Header Area -->
+<header class="header_area sticky-header">
+    <div class="main_menu">
+        <nav class="navbar navbar-expand-lg navbar-light main_box">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <a class="navbar-brand logo_h" href="index.html"><img src="~/Content/img/logo.png" alt=""></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
+                    <ul class="nav navbar-nav menu_nav ml-auto">
+                        <li class="nav-item"><a class="nav-link" href="@Url.Action("Index", "Home")">Trang chủ</a></li>
+                        <li class="nav-item"><a class="nav-link" href="~/Product/Shop">Shop</a></li>
+                        @{ string name = "";}
+                        <li class="nav-item"><a class="nav-link" href="~/Contact/ContactIndex">Liên hệ</a></li>
+                        @if (Session["UserName"] != null)
+                        {
+                            name = ((SellFootWear.Models.Customer)Session["UserName"]).CustomName.ToString();
+                            <li class="nav-item submenu dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                                   aria-expanded="false"><img src="~/Content/img/banner/User.png" style="width:23px" />@name</a>
+                                <ul class="dropdown-menu">
+                                    <li class="nav-item"><a class="nav-link" href="~/User/Logout">Đăng xuất</a></li>
+                                </ul>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item submenu dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                                   aria-expanded="false">Tài khoản</a>
+                                <ul class="dropdown-menu">
+
+                                    <li class="nav-item"><a class="nav-link" href="~/User/Login">Đăng nhập</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="~/User/Register">Đăng kí</a></li>
+
+                                </ul>
+                            </li>
+                        }
+
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        @Html.Action("CartPartial", "Cart")
+                        <li class="nav-item">
+                            <button class="search"><span class="lnr lnr-magnifier" id="search"></span></button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div class="search_input" id="search_input_box">
+        <div class="container">
+            <form class="d-flex justify-content-between">
+                <input type="text" class="form-control" id="search_input" placeholder="Search Here">
+                <button type="submit" class="btn"></button>
+                <span class="lnr lnr-cross" id="close_search" title="Close Search"></span>
+            </form>
+        </div>
+    </div>
+</header>
+<!-- End Header Area -->
+<!-- Start Banner Area -->
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>Giỏ hàng</h1>
+                <nav class="d-flex align-items-center">
+                    <a href="@Url.Action("Index", "Home")">Trang chủ<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="~/Cart/CartIndex">Giỏ hàng</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Banner Area -->
+<!--================Cart Area =================-->
+<section class="cart_area">
+    <div class="container">
+        <div class="cart_inner">
+          <div class="table-responsive">
+            @if (Model != null && Model.Count() > 0)
+            {
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Sản phẩm</th>
+                    <th scope="col">Giá tiền</th>
+                    <th scope="col">Số lượng</th>
+                    <th scope="col">Thành tiền</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+
+                  @foreach (var item in Model)
+                  {
+
+                    <tr>
+                      <td>
+                        <div class="media">
+                          <div class="d-flex">
+                            <a href="@Url.Action("Detail", "Product", new {Id = item.ipID})">
+                              <img src="~/Content/img/product/@item.sImage" style="width: 100px;">
+                            </a>
+                          </div>
+                          <div class="media-body">
+                            <p>@item.sNameProduct</p>
+                          </div>
+                        </div>
+                      </td>
+                      @using (Html.BeginForm("UpdateCart", "Cart", new { ipID = item.ipID }))
+                      {
+                        <td>
+                          <h5>@string.Format("{0:#,##0,0}", @item.dPrice) VNĐ</h5>
+                        </td>
+                        <td>
+                          <div class="product_count">
+                            <input type="number" name="qty" min="1" value="@item.iQuantity" title="Số lượng"
+                                   class="input-text qty">
+                          </div>
+                        </td>
+                        <td>
+                          <h5>@string.Format("{0:#,##0,0}", @item.dTotal)VNĐ</h5>
+                        </td>
+                        <td>
+                          <a href="@Url.Action("Removefromcart", "Cart", new { ipID = item.ipID })" class="genric-btn danger-border circle">Xóa</a>
+
+                        </td>
+                        <td>
+                          <input type="submit" value="cập nhật" class="genric-btn info-border circle" />
+                        </td>
+                      }
+                    </tr>
+                  }
+
+                  <tr class="bottom_button">
+                    <td>
+                      <a href="@Url.Action( "DeleteCart","Cart")" class="genric-btn danger">Xóa tất cả sản phẩm</a>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                      <h5>Tổng tiền phải trả: </h5>
+                    </td>
+                    <td>
+                      <h5 style="color: #ffba01">@string.Format("{0:#,##0,0}", ViewBag.TotalMoney)VNĐ</h5>
+                    </td>
+                  </tr>
+                  <tr class="out_button_area">
+                    <td>
+                      <a class="gray_btn" href="~/Product/Shop">Tiếp tục mua sắm</a>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                      <a class="primary-btn" href="@Url.Action("Checkout","Cart")">Đặt hàng</a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            }
+            else
+            {
+              <h3>Không có sản phẩm nào trong giỏ hàng</h3>
+            }
+
+          </div>
+        </div>
+    </div>
+</section>
+<!--================End Cart Area =================-->

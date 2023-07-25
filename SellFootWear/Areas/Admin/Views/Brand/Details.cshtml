@@ -1,0 +1,48 @@
+﻿@model SellFootWear.Models.Brand
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<section class="content">
+
+    <!-- Default box -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Brand Detail</h3>
+
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <dl class="dl-horizontal" style="margin-left: 20px;">
+
+            <dt style="margin-top: 12px;">
+                Tên thương hiệu
+            </dt>
+
+            <dd style="margin-top: 8px;">
+                @Html.DisplayFor(model => model.brand1)
+            </dd>
+        </dl>
+
+    </div>
+    <!-- /.card -->
+    <p>
+        <a class="btn btn-warning" href="@Url.Action( "Edit", new { id = Model.BrandID })">
+            <i class="fas fa-pencil-alt">
+            </i>
+            Edit
+        </a> |
+
+        <a class="btn btn-secondary" href="@Url.Action( "Index")">
+            Back to list
+        </a>
+    </p>
+</section>

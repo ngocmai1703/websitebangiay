@@ -1,0 +1,52 @@
+@model List<SellFootWear.Models.Product>
+
+@{
+    ViewBag.Title = "ProductCategoryShoes";
+    Layout = "~/Views/Shared/_LayoutShop2.cshtml";
+}
+
+<div class="container">
+    <!-- Start Filter Bar -->
+    <div class="filter-bar d-flex flex-wrap align-items-center">
+        <h1 style="color: white;margin-top: 12px;margin-bottom: 0px;">Sản phẩm</h1>
+    </div>
+    <!-- End Filter Bar -->
+    <!-- Start Best Seller -->
+    <section class="lattest-product-area pb-40 category-list">
+        <div class="row">
+            <!-- single product -->
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-4 col-md-6">
+                    <div class="single-product">
+                        <img class="img-fluid" src="~/Content/img/product/@item.image" alt="">
+                        <div class="product-details">
+                            <h6>
+                                @item.NameProduct
+                            </h6>
+                            <div class="price">
+                                <h6 style="color: #ffba01">@string.Format("{0:#,##0,0}", @item.price) VNĐ</h6>
+                            </div>
+                            <div class="prd-bottom">
+
+                                <a href="@Url.Action("AddToCart","Cart", new { ms = item.pID, url = Request.Url.ToString() })" class="social-info">
+                                    <span class="ti-bag"></span>
+                                    <p class="hover-text">Mua hàng</p>
+                                </a>
+                                <a href="@Url.Action("Detail", "Product", new {Id = item.pID})" class="social-info">
+                                    <span class="lnr lnr-move"></span>
+                                    <p class="hover-text">Xem chi tiết</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </section>
+
+</div>
+
+
+

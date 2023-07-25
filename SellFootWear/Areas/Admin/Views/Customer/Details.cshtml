@@ -1,0 +1,59 @@
+@model SellFootWear.Models.Customer
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+<div class="col-md-12">
+    <h3>Chi tiết khách hàng</h3>
+    <div class="card card-primary card-outline">
+        <div class="card-body box-profile">
+            <div class="text-center">
+                <img class="profile-user-img img-fluid img-circle"
+                     src="~/Content/dist/img/user-customer.jpg"
+                     alt="User profile picture">
+            </div>
+
+            <h3 class="profile-username text-center">@Model.CustomName</h3>
+
+            <p class="text-muted text-center">Khách hàng</p>
+
+            <ul class="list-group list-group-unbordered mb-3" style=" margin-left: 90px; margin-right: 90px; font-size: 1.1rem">
+              <li class="list-group-item">
+                <b>Số điện thoại:</b> <a class="float-right">@Model.PhoneNumber</a>
+              </li>
+              <li class="list-group-item">
+                <b>Địa chỉ:</b> <a class="float-right">@Model.Address</a>
+              </li>
+              <li class="list-group-item">
+                <b>Tên đăng nhập:</b> <a class="float-right">@Model.UserName</a>
+              </li>
+              <!--<li class="list-group-item">
+                <b>Mật khẩu:</b><a class="float-right">@Model.Password</a>
+               </li> -->
+              <li class="list-group-item">
+                <b>Ngày sinh:</b> <a class="float-right">@Model.Daybirth</a>
+              </li>
+              <li class="list-group-item">
+                <b>Email:</b> <a class="float-right">@Model.Email</a>
+              </li>
+            </ul>
+
+
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <p>
+        <a class="btn btn-warning" href="@Url.Action( "Edit", new { id = Model.CustomID })">
+            <i class="fas fa-pencil-alt">
+            </i>
+            Edit
+        </a> |
+
+        <a class="btn btn-secondary" href="@Url.Action( "Index")">
+            Back to list
+        </a>
+    </p>
+</div>

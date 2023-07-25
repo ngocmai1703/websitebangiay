@@ -1,0 +1,10 @@
+@model IEnumerable<SellFootWear.Models.Brand>
+
+
+@foreach (var item in Model)
+{
+    <li class="main-nav-list">
+        <a href="~/Product/ProductCategoryShoes/?id=@item.BrandID">@item.brand1</a>
+    </li>
+}
+

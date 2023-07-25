@@ -1,0 +1,91 @@
+﻿@*@model IEnumerable<SellFootWear.Models.Brand>*@
+@using SellFootWear.Models;
+@using PagedList.Mvc;
+@model PagedList.IPagedList<SellFootWear.Models.Brand>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div style="margin-left:50px">
+    <h3>Thương hiệu</h3>
+</div>
+
+<section class="content">
+
+    <!-- Default box -->
+    <div class="card">
+        <div class="card-header">
+
+            <a class="btn btn-success" href="@Url.Action( "Create" )" style="margin-left:20px">
+                <i class="fas fa-pencil-alt">
+                </i>
+                Thêm mới
+            </a>
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body p-0">
+            <table class="table table-striped projects">
+                <thead>
+                    <tr>
+                        <th>
+
+                        </th>
+                        <th>
+                            ID
+                        </th>
+                        <th>
+                            Tên thương hiệu
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.BrandID)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.brand1)
+                            </td>
+                            <td>
+                                <a class="btn btn-primary btn-sm" href=" @Url.Action("Details", new { id = item.BrandID })">
+                                    <i class="fas fa-eye">
+                                    </i>
+                                    View
+                                </a>
+                                |
+                                <a class="btn btn-info btn-sm" href="@Url.Action("Edit", new { id = item.BrandID })">
+                                    <i class="fas fa-pencil-alt">
+                                    </i>
+                                    Edit
+                                </a>
+                                |
+                                <a class="btn btn-danger btn-sm"
+                                   onclick="if (confirm('Bạn có chắc muốn xóa không!') == true) { location.href = '@Url.Action("Delete", new { id = item.BrandID })' }">
+                                    <i class="fas fa-trash">
+                                    </i>
+                                    Delete
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+
+</section>
+<div style="text-align: center; margin-bottom: -15px; margin-top: -20px; ">@Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }))</div>

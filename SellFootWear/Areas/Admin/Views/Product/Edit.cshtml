@@ -1,0 +1,149 @@
+﻿@model SellFootWear.Models.Product
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<script src="~/ckeditor/ckeditor.js"></script>
+<!---++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+@using (Html.BeginForm("Edit", "Product", FormMethod.Post, new
+{
+    @enctype = "multipart/form-data"
+}))
+{
+
+
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <div class="col-md-12">
+
+            <h4>Chỉnh sửa sản phẩm</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <div class="col-md-10">
+                    Tên sản phẩm:
+                    <input type="text" size="70" name="sNameProduct" value="@Model.NameProduct"
+                           required />
+                </div>
+            </div>
+            <div class="row" style="margin-top: 30px">
+                <div class="form-group col-3">
+                    @*@Html.LabelFor(m => m.TypeID, new { @class = "control-lable col-md-2" })*@
+                    <div class="col-md-10">
+                        Loại:
+                        @Html.DropDownList("TypeID")
+                    </div>
+                </div>
+                <div class="form-group col-4">
+                    @*@Html.LabelFor(m => m.BrandID, new { @class = "control-lable col-md-2" })*@
+                    <div class="col-md-10">
+                        Thương hiệu:
+                        @Html.DropDownList("BrandID")
+                    </div>
+                </div>
+                <div class="form-group col-5">
+
+                    <div class="col-md-7">
+                        Giá:
+                        <input type="number" min="1" required name="price"
+                               value="@Model.price" />
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="form-group col-3">
+
+                    <div class="col-md-10">
+                        <div class="checkbox">
+                            Giảm giá:
+                            @Html.EditorFor(model => model.Discount)
+                            @Html.ValidationMessageFor(model => model.Discount, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-4">
+                    <div class="col-md-10">
+                        Giá giảm:
+                        <input type="number" min="1" required name="pricediscount"
+                               value="@Model.pricediscount" />
+                    </div>
+                </div>
+                <div class="form-group col-4">
+
+                    <div class="col-md-10">
+                        Ngày cập nhật:
+                        <input type="datetime" name="UpdateDay" required value="@Convert.ToDateTime(Model.UpdateDay)" />
+                    </div>
+
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+
+
+                <div class="form-group col-3">
+                    Ảnh đại diện
+                    <div class="col-md-10">
+                        <img src="~/Content/img/product/@Model.image" width="120" style=" margin-bottom: 15px;"> (Ảnh hiện tại)
+                        <input type="file" class="file-input" name="fFileUpload" />
+                        @Html.ValidationMessageFor(model => model.image, "", new { @class = "text-danger" })
+                        @Html.Hidden("oldimage", @Model.image)
+                        @Html.ValidationMessageFor(model => model.image, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group col-4">
+                    <p class="control-label col-md-10">Hình ảnh 1:</p>
+                    <div class="col-md-10">
+                        <img src="~/Content/img/product/@Model.image2" width="120" style=" margin-bottom: 15px;"> (Ảnh hiện tại)
+                        <input type="file" class="file-input" name="fFileUpload" />
+                        @Html.ValidationMessageFor(model => model.image2, "", new { @class = "text-danger" })
+                        @Html.Hidden("oldimage", @Model.image2)
+                        @Html.ValidationMessageFor(model => model.image2, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group col-5">
+                    <p class="control-label col-md-10">Hình ảnh 2:</p>
+                    <div class="col-md-10">
+                        <img src="~/Content/img/product/@Model.image3" width="120" style=" margin-bottom: 15px;"> (Ảnh hiện tại)
+                        <input type="file" class="file-input" name="fFileUpload" />
+                        @Html.ValidationMessageFor(model => model.image3, "", new { @class = "text-danger" })
+                        @Html.Hidden("oldimage", @Model.image3)
+                        @Html.ValidationMessageFor(model => model.image3, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.describeshort, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.describeshort, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.describeshort, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.describe, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.describe, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.describe, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+
+
+}
+<div style=" margin-left: 12px;">
+    <a class="btn btn-secondary" href="@Url.Action( "Index")">
+        Back to list
+    </a>
+</div>

@@ -1,0 +1,123 @@
+﻿@model SellFootWear.Models.Order
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    
+}
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <!-- Main content -->
+                <div class="invoice p-3 mb-3">
+                    <!-- title row -->
+                    <div class="row">
+                        <div class="col-12">
+                            <h4>
+                                <i class="fas fa-globe"></i> Chi tiết đơn hàng
+                                <small class="float-right">Ngày đặt: @Model.Orderday</small>
+                            </h4>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+
+                    <div class="row invoice-info">
+                        <div class="col-sm-4 invoice-col" style=" margin-top: 12px;">
+
+                            <p> <b>Khách hàng:</b> @Model.Customer.CustomName<br></p>
+                            <p><b>Địa chỉ:</b> @Model.Customer.Address<br></p>
+                            <p><b>Số điện thoại:</b> @Model.Customer.PhoneNumber<br></p>
+                            <p><b>Ngày sinh:</b> @Model.Customer.Daybirth<br></p>
+                            <p> <b>Email:</b> @Model.Customer.Email</p>
+                        </div>
+                    </div>
+                    <!-- /.row -->
+                    <!-- Table row -->
+                    <div class="row">
+                        <div class="col-12 table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Tên sản phẩm</th>
+                                        <th>Giá</th>
+                                        <th>Số lượng</th>
+                                        <th>Thành tiền</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{int i = 0; }
+                                    @foreach (var item in Model.OrderDetails)
+                                    {
+                                        <tr>
+                                            <td>@(i+1)</td>
+                                            <td>@item.Product.NameProduct</td>
+                                            <td>@string.Format("{0:#,##0,0}", @item.price) VNĐ</td>
+                                            <td>x @item.amount</td>
+                                            <td>@string.Format("{0:#,##0,0}", @item.intomoney) VNĐ</td>
+                                        </tr>
+                                        i++;
+                                    }
+
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+
+                    <div class="row">
+                        <!-- accepted payments column -->
+                        <div class="col-6">
+
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-6">
+                            <p class="lead">Tổng phí phải chịu</p>
+
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <tr>
+                                        <th style="width:50%">Tổng phụ:</th>
+                                        <td>0 VNĐ</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Shipping:</th>
+                                        <td>0 VNĐ</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Tổng tiền:</th>
+                                        <td>@string.Format("{0:#,##0,0}", Model.value) VNĐ</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                    <!-- this row will not appear when printing -->
+                    <div class="row no-print">
+                        <div class="col-12">
+                            <a href="@Url.Action("Order_Print", new { id = Model.OrderID })" rel="noopener" target="_blank" class="btn btn-default float-right">
+                            <i class="fas fa-print"></i> In hóa đơn
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.invoice -->
+            </div><!-- /.col -->
+            <p>
+                <a class="btn btn-secondary" href="@Url.Action( "Index")">
+                    Back to list
+                </a>
+               
+            </p>
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section>
+
+
+
